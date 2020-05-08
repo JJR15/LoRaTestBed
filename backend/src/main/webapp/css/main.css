@@ -1,0 +1,112 @@
+.sidebar-mainmenu {
+    margin-left: 20%;
+    font-size: 17px;
+    line-height: 30px;
+}
+
+.sidebar-submenu {
+    margin-left: 30%;
+	font-size: 15px;
+	line-height: 25px;
+}
+.my-navbar{
+	height: 60px;
+	line-height: 40px;
+}
+.nav>li{
+	line-height: 60px;
+}
+.welcome{
+	padding-right: 40px
+}
+.smallstat .m-title{
+	top: 12px;
+	color: #969aa5;
+	display: block;
+	font-size: 20px;
+	margin-top: 4px;
+}
+.smallstat .m-value {
+	font-size: 30px;
+	font-weight: 1000;
+}
+.table th, .table td{
+    text-align: center;
+}
+.center{
+    text-align: center;
+}
+.table button:first-child{
+    margin-left: 0;
+}
+.table button{
+    margin-left: 40px;
+}
+
+ul{
+	padding: 0;
+	margin: 0 0 10px 0;
+}
+.operate-list li:first-child{
+	margin-left: 0;
+}
+.operate-list li{
+	float: left;
+	margin-left: 30px;
+	list-style-type: none;
+	line-height: inherit;
+}
+.operate-list-en li:first-child{
+	margin-left: 0;
+}
+.operate-list-en li{
+	float: left;
+	margin-left: 15px;
+	list-style-type: none;
+	line-height: inherit;
+}
+
+.height30{
+    line-height: 30px;
+}
+.orderbtn{
+    float: right;
+    margin: 20px 50px 0 0;
+}
+select{
+    width: auto;
+}
+input[placeholder],[placeholder],[placeholder]{
+    color:#000000!important
+}
+input:-moz-placeholder,textarea:-moz-placeholder{color:#000000}
+input:-ms-input-placeholder,textarea:-ms-input-placeholder{color:#000000}
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{color:#000000}
+.form-horizontal .m-form-actions{
+    margin-bottom: 20px;
+    padding-left: 180px;
+}
+.form-horizontal .control-group {
+    margin-bottom: 20px;
+}
+.control-group.error .control-label, .control-group.error input{
+    color: initial;
+}
+.cmd-area{
+	background-color: black;
+	margin: 15px;
+	height: 450px;
+	padding: 20px;
+	overflow: scroll;
+	color:whitesmoke;
+	font-size: medium
+}
+.dialog-div{
+	width: 30%;
+	float: left;
+	padding: 0 10%;
+	height: 35px;
+}
+.dialog-btn{
+    text-align: right;padding: 10px 80px;
+}

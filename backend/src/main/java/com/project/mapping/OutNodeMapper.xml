@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.mapper.OutNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.project.model.OutNode" >
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="dev_eui" property="dev_eui" jdbcType="VARCHAR"  />
+      <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+      <result column="latitude" property="latitude" jdbcType="DOUBLE"  />
+      <result column="spreading_factor" property="spreading_factor" jdbcType="INTEGER" />
+      <result column="channel_group" property="channel_group" jdbcType="INTEGER" />
+      <result column="last_packet_time" property="last_packet_time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="selectAllOutNode" resultType="com.project.model.OutNode">
+    SELECT * from lora_web_node
+  </select>
+</mapper>

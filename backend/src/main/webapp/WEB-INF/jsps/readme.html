@@ -1,0 +1,87 @@
+
+<p><img alt="logo" src="http://ou1h4mwlq.bkt.clouddn.com/logo.png" /></p>
+
+<h2>项目背景</h2>
+
+<p>随着物联网蓬勃发展，低功耗广域物联网也逐渐升温。LoRa网络在物联网中有着举足轻重的作用，为了更好地进行科研实验，更加真实模拟环境，清华大学软件学院可信网络与系统所开发了此套LoRa物联网测试床平台</p>
+
+<h2>项目概述</h2>
+
+<p>LoRaWAN测试床实验平台具有采集数据及时、节点自主注册、节点可移动等特点。LoRa节点与树莓派一对一连接，树莓派通过WiFi连接网络与中心服务器通信并通过串口控制LoRa节点，用户可通过访问B/S架构平台进行科研实验。</p>
+
+<p>本实验平台满足了测试床基本所有功能，并符合要求，具体如下：
+    - 批量烧录LoRa节点
+    - 实时获取节点采集的数据
+    - 历史数据查询
+    - 数据导出
+    - 具有扩展性、及时性等特性</p>
+
+<h2>项目技术</h2>
+
+<ul><li>基于 Java Web 的LoRa测试床实验平台</li><li>基于 Socket 的中心服务器与树莓派通信</li><li>基于 MQTT 的数据采集消息订阅及实时查看</li><li>基于 Serial Port 控制微处理器单元STM32</li><li>基于 BootLoader 的LoRa节点固件程序升级</li><li>Web后台采取SSM（Spring、SpringMVC、MyBatis）架构</li><li>Go语言高效运行LoRaServer/LoRaAppServer</li></ul>
+
+<h2>系统架构</h2>
+
+<h3>整体架构</h3>
+
+<p>本系统采用去中心化设计，整体依赖于TCP/IP协议和串口分布式数据网络，整体的架构如下：
+    系统整体拓扑图如下：
+    <img alt="LoRaWAN TestBed Platform" src="http://ou1h4mwlq.bkt.clouddn.com/test%20bed%20for%20LoRaWAN.png" width="100%"/></p>
+
+<ul><li>最上层为用户层，用户通过浏览器访问B/S架构的实验平台</li><li>中心服务器为Web后台，通过MyBatis与云数据库交互，通过socket与LoRa节点所属树莓派通信</li><li>节点分布网络中包括50个LoRa节点，每个节点连接一个树莓派，树莓派可通过socket与中心服务器通信，收发信号后通过串口控制LoRa节点烧录擦除等操作</li><li>LoRa节点通过LoRaWAN协议向网关Gateway（树莓派）发送数据</li><li>网关Gateway与LoRa Server/LoRa App Server通过TCP/IP通信，在LoRa App Server中解析LoRa节点采集的数据并存储到云MySQL数据库</li></ul>
+
+<h3>中心服务器Web服务架构图</h3>
+
+<p>本实验平台的Java Web采用SpringMVC框架分层处理逻辑，架构图具体如下：
+    <img alt="Java Web" src="http://ou1h4mwlq.bkt.clouddn.com/Java%20Web.png" /></p>
+
+<ul><li><p>业务处理流程</p><ul><li>当web程序启动的时候，ContextLoaderServlet会把对应的配置文件信息读取出来，通过注射去初始化控制器DispatchServlet。</li><li>用户与Web交互，当接受到一个HTTP请求的时候, DispatchServlet会让HandlerMapping去处理这个请求。</li><li>HandlerMapping根据请求URL来选择一个Controller，然后DispatchServlet会在调用选定的Controller的handlerRequest方法，并且在这个方法前后调用这个Controller的拦截器interceptor(验证用户是否合法登录)</li><li><p>返回一个视图和模型的集合ModelAndView。框架通过ViewResolver来解析视图并且返回一个View对象，最后调用View的render方法返回到客户端</p></li></ul></li><li><p>MyBatis（ORM）</p><p>Mybatis是一个基于Java的持久层框架，能够轻松地将接口和 Java 的POJO（Plain Ordinary Java Objects）映射成数据库中的记录。</p></li><li><p>SpringMVC </p><p>Spring MVC属于SpringFrameWork的后续产品，Spring MVC 框架提供了构建 Web 应用程序的全功能 MVC 模块。</p></li><li><p>Spring</p><p>Spring是一个轻型容器(light-weight Container)，其核心是Bean工厂(Bean Factory)，用以构造我们所需要的Model。此外，Spring对Bean工厂的扩展ApplicationContext更加方便实现Java EE应用</p></li></ul>
+
+<h3>LoRa节点通信架构图（LoRaWAN协议）</h3>
+
+<p>LoRa服务器架构由多个组件组成，架构图具体如下：</p>
+
+<!--<p><img alt="LoRa WAN" src="https://camo.githubusercontent.com/1f795b6b32290e0f2eb8e4286395ce7657b7933d/68747470733a2f2f646f63732e6c6f72617365727665722e696f2f696d672f6172636869746563747572652e706e67"/></p>-->
+
+<h4>LoRaWAN 组件</h4>
+
+<ul><li><p>LoRa nodes</p><p>IoT设备是将数据发送到LoRa网络（通过LoRa网关）的设备。 这些设备可以是传感器，测量空气质量，温度，湿度，位置...</p></li><li><p>LoRa gateway</p><p>网关从节点接收数据，并进行数据包转发的实现。</p></li><li><p>LoRa Gateway Bridge</p><p>LoRa Gateway Bridge 负责与网关通信。 它通过MQTT协议将数据包转发的UDP协议转换为JSON。</p></li><li><p>LoRa Server</p><ul><li><p>LoRa Server 负责网络部分。 它能够主动与节点会话，当一个新节点加入网络时，会询问应用服务器是否允许该节点到您的网络，如果是，该节点将使用哪些设置。</p></li><li><p>对于主动与节点会话，它会将接收到的数据（可能由多个网关接收到的数据）重新复制，它会对此日期进行身份验证（以确保这些数据不会发生重放攻击），它将此（加密）数据转发到 应用程序服务器，它会询问应用程序服务器是否应该发回任何东西。</p></li><li><p>LoRa Server实现了gRPC API，可以轻松构建自己的应用服务器。</p></li></ul></li><li><p>LoRa App Server</p><ul><li>LoRa App Server 实现与LoRa Server组件兼容的应用程序服务器。 它为每个应用程序提供节点管理。与应用程序的通信是通过基于MQTT的JSON,并使用公开的API。</li><li>LoRa App Server提供了可用于网关，节点和网关管理的Web界面，还提供API端点，以便将其与产品集成。</li></ul></li><li><p>Application</p><p>应用程序订阅MQTT主题，用于接收应用程序中节点的数据。 它也能够通过MQTT发送数据。 如果需要，还可以使用gRPC或JSON REST api与LoRa App Server进行交互。</p></li><li><p>Lora服务器项目是一个开放源代码的应用程序，弥补了应用程序直接接收来自节点数据的不足。 提供了对LoRa网络上的网关，支持的应用程序以及应用程序服务器等的支持。</p></li><li><p>该项目的设计使其可以以非常灵活的方式使用。 例如，LoRa App Server组件实现应用程序 - 服务器组件，并为用户提供一个Web UI，以访问和修改其网关，应用程序和节点。 该系统也可以通过gRPC和JSON REST API中实现的编程接口进行访问。</p></li></ul>
+
+<h2>业务流程</h2>
+
+<h3>登录</h3>
+
+<ol><li>与云数据库通信，确认用户名和密码是否匹配</li><li>登录生成session会话，实时更新网站统计数据（在线人数等）</li></ol>
+
+<p><img alt="Login Page" src="http://ou1h4mwlq.bkt.clouddn.com/w3jiemian.png" width="100%"/></p>
+
+<h3>查看网站信息</h3>
+
+<ol><li>根据用户session会话更新在线用户</li><li>查询数据库定期更新LoRa节点数、使用节点数、用户总数等信息</li></ol>
+
+<p><img alt="WebInfo Page" src="http://ou1h4mwlq.bkt.clouddn.com/WebInfo%20Page.jpg" width="100%"/></p>
+
+<h3>查看LoRa节点分布图</h3>
+
+<ol><li><p>携带用户session更新所有LoRa节点状态</p><ul><li><p>状态0 ： LoRa节点未连通/已断网</p></li><li>状态1 ： LoRa节点可使用</li><li>状态2 ： LoRa节点被当前用户使用，节点在运行且在采集数据，用户可点击进入查看采集的数据</li><li>状态3 ： LoRa节点被其他用户使用，当前用户没有权限查看信息</li></ul></li><li>根据不同状态渲染LoRa节点不同的颜色及点击状态</li><li>每次刷新页面，LoRa节点分布图都会再次渲染</li></ol>
+
+<p><img alt="LoRa node map" src="http://ou1h4mwlq.bkt.clouddn.com/LoRa%20node%20map.jpg" width="100%"/></p>
+
+<h3>选择并烧录节点</h3>
+
+<ol><li>用户上传.bin文件</li><li>用户选择想要使用的节点</li><li>点击烧录，开始校验.bin文件合法性，否则弹窗反馈。合法的.bin应该满足以下条件：<ul><li>.bin文件大小在62KB以内（LoRa节点 Flash 大小限制）</li><li>原项目包含宏定义 LORAWAN<em>DEVICE</em>EUI = {0x47, 0x86, 0xe6, 0xed, 0x00, 0x38, 0x00, 0x04}</li><li>原项目包含宏定义 LORAWAN<em>APPLICATION</em>EUI = { 0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x00, 0x14, 0x0D }</li><li>原项目包含宏定义 LORAWAN<em>APPLICATION</em>KEY = { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }</li></ul></li><li>中心服务器通过socket与相应LoRa节点所属树莓派通信，并执行烧录程序</li><li>界面提示“烧录成功”并页面打印日志，点击确定后刷新页面，再次渲染LoRa节点分布图</li></ol>
+
+<p><img alt="Burn node" src="http://ou1h4mwlq.bkt.clouddn.com/burn%20node.jpg" width="100%"/></p>
+
+<h3>查看导出节点数据</h3>
+
+<ol><li>用户通过LoRa节点分布图点击进入相应节点</li><li>加载前再次校验当前用户是否具有访问当前节点的权限</li><li>通过MQTT协议订阅节点采集到的数据，实时展现给用户</li><li>通过日期从数据库中筛选出历史采集数据</li><li>将筛选出的数据或者当前用户使用当前节点以来的所有数据导出Excel</li></ol>
+
+<p><img alt="view &amp; export data" src="http://ou1h4mwlq.bkt.clouddn.com/export.jpg" width="40%"/>
+    <img alt="query data" src="http://ou1h4mwlq.bkt.clouddn.com/query.jpg" width="100%"/></p>
+
+<h3>停止使用节点</h3>
+
+<ol><li>用户通过LoRa节点分布图点击进入相应节点</li><li>加载前再次校验当前用户是否具有访问当前节点的权限</li><li>点击“停止使用节点”，通过树莓派控制LoRa节点停止采集数据并修改相应数据表</li><li>界面返回到LoRa节点分布图。用户停止使用节点后，将不能再次查看节点采集数据页面</li></ol>
+
+<p><img alt="stop node" src="http://ou1h4mwlq.bkt.clouddn.com/stopnode.jpg" width="100%"/></p>
