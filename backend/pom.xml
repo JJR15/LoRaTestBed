@@ -16,7 +16,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <junit-version>3.8.1</junit-version>
-    <spring-version>4.2.1.RELEASE</spring-version>
+    <spring-version>5.2.7.RELEASE</spring-version>
     <mybatis-version>3.3.0</mybatis-version>
     <mybatis-spring-version>1.2.3</mybatis-spring-version>
     <druid-version>1.0.15</druid-version>
@@ -59,7 +59,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
-      <version>4.2.1.RELEASE</version>
+      <version>5.2.7.RELEASE</version>
     </dependency>
 
     <dependency>
