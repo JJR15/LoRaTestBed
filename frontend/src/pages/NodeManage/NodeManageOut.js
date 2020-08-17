@@ -137,7 +137,7 @@ class NodeManageOut extends PureComponent {
     formData.append("id", val.nodeId);
     formData.append('file',option.file);
     $.ajax({
-      url: server_url + "/node/update",
+      url: server_url + "/nodeData/update",
       method: 'post',
       processData: false,
       contentType:false,

@@ -129,7 +129,7 @@ public class NodeOrderController {
             res.put("code", 1);
             for (OutNode item : outNodeList) {
                 idList.add(item.getId());
-                macList.add(item.getDev_eui());
+                macList.add(item.getDevEui());
                 //statusList.add(item.getState());
                 statusList.add(1);
                 longitude_position.add(item.getLongitude());

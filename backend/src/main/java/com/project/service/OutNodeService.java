@@ -12,5 +12,6 @@ public interface OutNodeService {
 
     void deleteDeviceQueue(String dev_eui);
 
-    void mqttSend(MultipartFile bin_file, String topic, int start, int partLen);
+    public void mqttSend(String devEui,String filePath,int startPos ,int sf);
+
 }
